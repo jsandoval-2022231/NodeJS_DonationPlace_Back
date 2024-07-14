@@ -25,9 +25,5 @@ export const itemSchema = Joi.object({
     }),
     status: Joi.boolean().default(true).messages({
         "boolean.base": "Status must be a boolean"
-    }),
-    user: Joi.string().required().messages({
-        "any.required": "User is required",
-        "string.empty": "User is not allowed to be empty"
     })
 });
