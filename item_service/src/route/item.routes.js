@@ -6,7 +6,7 @@ import { post, getAll, getOne, update, remove } from '../controller/item.control
 
 const router = Router();
 
-router.post('/post', [validateJWT, validate(itemSchema)], validate, post);
+router.post('/post', [validateJWT, validate(itemSchema)], post);
 router.get('/getAll', getAll);
 router.get('/getOne/:id', getOne);
 router.put('/update/:id', update);
