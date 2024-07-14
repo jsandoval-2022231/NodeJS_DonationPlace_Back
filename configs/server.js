@@ -7,11 +7,13 @@ import morgan from 'morgan';
 import { dbConnection } from './mongo.js';
 import bcrypt from 'bcryptjs';
 import User from '../user_service/src/model/user.model.js';
+import UserRoutes from '../user_service/src/route/user.routes.js';
 
 class Server {
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
+        this.userPath = '/DonationPlace/v1/user';
 
         this.conectarDB();
         this.createDefaultAdmin();
@@ -53,6 +55,7 @@ class Server {
     }
 
     routes() {
+        this.app.use(this.userPath, UserRoutes);
     }
 
 

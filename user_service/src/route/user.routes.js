@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { validate } from '../../http_service/test/validate-field.js';
-import { userSchema } from '../middleware/user.validator.js';
+import { validate } from '../../../http_service/test/validate-field.js';
+import { userSchema } from '../../middleware/user.validator.js';
 import { post, getAll, getOne, update, remove } from '../controller/user.controller.js';
 
 const router = Router();
