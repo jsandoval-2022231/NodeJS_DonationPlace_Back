@@ -1,5 +1,4 @@
 import ItemModel from '../model/item.model.js';
-import UserModel from '../../user_service/src/model/user.model.js';
 import createController from '../../../http_service/src/http.service.js';
 
 const custumPostLogic = async (req, res) => {

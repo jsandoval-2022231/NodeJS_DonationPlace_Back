@@ -7,7 +7,9 @@ import morgan from 'morgan';
 import { dbConnection } from './mongo.js';
 import bcrypt from 'bcryptjs';
 import User from '../user_service/src/model/user.model.js';
+import Item from '../item_service/src/model/item.model.js';
 
+import ItemRoutes from '../item_service/src/route/item.routes.js';
 import AuthRoutes from '../auth_service/src/route/auth.routes.js';
 import UserRoutes from '../user_service/src/route/user.routes.js';
 
@@ -17,6 +19,7 @@ class Server {
         this.port = process.env.PORT;
         this.userPath = '/DonationPlace/v1/user';
         this.authPath = '/DonationPlace/v1/auth';
+        this.itemPath = '/DonationPlace/v1/item';
 
         this.conectarDB();
         this.createDefaultAdmin();
@@ -60,6 +63,7 @@ class Server {
     routes() {
         this.app.use(this.userPath, UserRoutes);
         this.app.use(this.authPath, AuthRoutes);
+        this.app.use(this.itemPath, ItemRoutes);
     }
 
 
