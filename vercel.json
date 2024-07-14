@@ -13,6 +13,6 @@
       }
     ],
     "env": {
-      "MONGO_URI": "@URI_MONGO"
+      "URI_MONGO": "@URI_MONGO"
     }
   }
