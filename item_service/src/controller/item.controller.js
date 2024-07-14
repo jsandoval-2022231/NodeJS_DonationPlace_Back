@@ -2,8 +2,7 @@ import ItemModel from '../model/item.model.js';
 import createController from '../../../http_service/src/http.service.js';
 
 const custumPostLogic = async (req, res) => {
-    const user = req.user.id;
-    console.log('userXD', user);
+    const user = req.user;
     const { title, description, category, condition, img } = req.body;
     const item = new ItemModel({
         title,
@@ -16,7 +15,8 @@ const custumPostLogic = async (req, res) => {
     await item.save();
     res.status(201).json({
         msg: "Item created",
-        item
+        item,
+        user: req.user
     });
 }
 
