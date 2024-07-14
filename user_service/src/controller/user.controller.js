@@ -4,7 +4,7 @@ import createController from "../../../http_service/src/http.service.js";
 
 const customPostLogic = async (req, res) => {
     const { name, email, password, address, phone } = req.body;
-    const passwordHash = await bcrypt.hash(password, 3);
+    const passwordHash = await bcrypt.hash(password, 4);
     const user = new UserModel({
         name,
         email,
