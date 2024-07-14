@@ -1,6 +1,6 @@
 import bcryptjs from 'bcryptjs';
-import User from '../user/user.model.js';
-import { generateToken } from '../helpers/generate-jwt.js';
+import User from '../../../user_service/src/model/user.model.js';
+import { generateToken } from '../../utils/generate--jwt.js';
 
 export const login = async (req, res) => {
     const { email, password } = req.body;
