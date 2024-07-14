@@ -3,6 +3,7 @@ import createController from '../../../http_service/src/http.service.js';
 
 const custumPostLogic = async (req, res) => {
     const user = req.user.id;
+    console.log('userXD', user);
     const { title, description, category, condition, img } = req.body;
     const item = new ItemModel({
         title,
