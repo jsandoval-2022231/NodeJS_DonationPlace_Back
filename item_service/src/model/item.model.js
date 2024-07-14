@@ -13,7 +13,7 @@ const itemSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    contion: {
+    condition: {
         type: String,
         enum: ['NEW', 'USED', 'REFURBISHED', 'DAMAGED', 'FOR PARTS'],
         default: 'USED',

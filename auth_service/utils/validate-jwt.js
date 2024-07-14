@@ -14,7 +14,7 @@ export const validateJWT = (req, res, next) => {
         console.log('Token after replacement:', token);
 
         const decoded = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
-        req.user = decoded.userId;
+        req.user.id = decoded.userId;
     } catch (e) {
         console.error('Token verification error:', e.message);
         return res.status(401).send('Invalid Token');
