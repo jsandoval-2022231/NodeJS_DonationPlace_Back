@@ -11,8 +11,5 @@
         "src": "/(.*)",
         "dest": "/index.js"
       }
-    ],
-    "env": {
-      "URI_MONGO": "@URI_MONGO"
-    }
+    ]
   }
