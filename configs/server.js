@@ -21,6 +21,7 @@ class Server {
         this.authPath = '/DonationPlace/v1/auth';
         this.itemPath = '/DonationPlace/v1/item';
 
+        
         this.conectarDB();
         this.createDefaultAdmin();
         this.middlewares();
@@ -54,7 +55,12 @@ class Server {
     }
 
     middlewares() {
-        this.app.use(cors());
+        this.app.use(cors({
+            origin: 'http://localhost:5173',
+            methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+            //methods: ['GET', POST', 'PUT', 'DELETE', 'OPTIONS'],    
+            allowedHeaders: ['Content-Type', 'Authorization']
+        }));
         this.app.use(express.json());
         this.app.use(helmet());
         this.app.use(morgan('dev'));

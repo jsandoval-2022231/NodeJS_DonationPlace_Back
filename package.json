@@ -27,5 +27,6 @@
     "vercel": "^34.3.1"
   },
   "type": "module",
+  "proxy": "http://node-js-donation-place-back.vercel.app",
   "license": "ISC"
 }
