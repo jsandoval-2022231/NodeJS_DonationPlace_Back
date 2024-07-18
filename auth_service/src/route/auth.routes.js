@@ -6,6 +6,6 @@ import { validateJWT } from '../../utils/validate-jwt.js';
 
 const router = Router();
 
-router.post('/login', [validateJWT, validate(loginValidator)], login);
+router.post('/login', [validate(loginValidator)], login);
 
 export default router;
