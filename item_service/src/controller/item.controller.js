@@ -42,6 +42,32 @@ export const insertProduct = async (req, res) => {
 
 }
 
+export const addComment = async (req, res, next) => {
+    const autor = req.user;
+    const { text } = req.body;
+    try {
+        const postComment = await ItemModel.findByIdAndUpdate(req.params.id, {
+            $push: { 
+                comments: { 
+                    user: autor.uid, 
+                    text 
+                } 
+            }
+        }, { new: true });
+
+        if (!postComment) {
+            return res.status(404).json({ error: 'Post no encontrado' });
+        }
+
+        res.status(200).json({
+            success: true,
+            post: postComment
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 const itemController = createController(ItemModel, custumPostLogic);
 
 export const post = itemController.post;
