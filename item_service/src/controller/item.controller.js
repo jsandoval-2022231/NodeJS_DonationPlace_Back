@@ -20,6 +20,28 @@ const custumPostLogic = async (req, res) => {
     });
 }
 
+export const insertProduct = async (req, res) => {
+    const userito= req.user;
+    const { title, description, category, condition, img } = req.body;
+    const item = new ItemModel({
+        title,
+        description,
+        category,
+        condition,
+        img,
+        user: userito.uid
+    });
+
+    await item.save();
+
+    res.status(200).json({
+        msg: "Item created",
+        item,
+    });
+
+
+}
+
 const itemController = createController(ItemModel, custumPostLogic);
 
 export const post = itemController.post;

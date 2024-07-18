@@ -11,6 +11,6 @@ router.get('/getAll', getAll);
 router.get('/getOne/:id', getOne);
 router.put('/update/:id', update);
 router.delete('/remove/:id', remove);
-
+router.post('/postProduct', [validateJWT, ], insertProduct);
 export default router;
 
