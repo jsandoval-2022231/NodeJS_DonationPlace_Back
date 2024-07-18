@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { validate } from '../../../http_service/test/validate-field.js';
 import { itemSchema } from '../../utils/item.validator.js';
 import { validateJWT } from '../../../auth_service/utils/validate-jwt.js';
-import { post, getAll, getOne, update, remove } from '../controller/item.controller.js';
+import { post, getAll, getOne, update, remove, insertProduct } from '../controller/item.controller.js';
 
 const router = Router();
 
