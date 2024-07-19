@@ -2,20 +2,24 @@ import Chat from '../model/chat.model.js';
 
 export const handleChatConnection = (io) => {
   io.on('connection', (socket) => {
-    console.log('New client connected');
+      console.log('New client connected');
 
-    socket.on('chatMessage', async (msg) => {
-      const chatMessage = new Chat({
-        user: msg.user,
-        message: msg.message
+      socket.on('chatMessage', async (msg) => {
+          try {
+              const chatMessage = new Chat({
+                  user: msg.user,
+                  message: msg.message
+              });
+              await chatMessage.save();
+              io.emit('chatMessage', msg);
+          } catch (error) {
+              console.error('Error saving chat message:', error);
+          }
       });
-      await chatMessage.save();
-      io.emit('chatMessage', msg);
-    });
 
-    socket.on('disconnect', () => {
-      console.log('Client disconnected');
-    });
+      socket.on('disconnect', () => {
+          console.log('Client disconnected');
+      });
   });
 };
 

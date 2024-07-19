@@ -15,6 +15,7 @@ import AuthRoutes from '../auth_service/src/route/auth.routes.js';
 import UserRoutes from '../user_service/src/route/user.routes.js';
 import ChatRoutes from '../chat/src/route/chat.routes.js';
 
+import { handleChatConnection } from '../chat/src/controller/chat.controller.js';
 import configureSocket from '../chat/src/configs/socket.io.js';
 
 class Server {
@@ -38,6 +39,8 @@ class Server {
             req.io = this.io;
             next();
         });
+
+        handleChatConnection(this.io);
         this.routes();
 
     }
