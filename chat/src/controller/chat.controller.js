@@ -24,36 +24,46 @@ export const handleChatConnection = (io) => {
 };
 
 export const postChatMessage = async (req, res) => {
-    try {
-        const senderId = req.user;
-        const {receiverId, message } = req.body;
-        const chatMessage = new Chat({
-          senderId: senderId.uid,
-          receiverId,
-          message
-        });
-        const savedMessage = await chatMessage.save();
+  try {
+      const senderId = req.user.uid;
+      const { receiverId, message } = req.body;
 
-        req.io.emit('chatMessage', { senderId, receiverId, message });
+      let chat = await Chat.findOne({
+          users: { $all: [senderId, receiverId] }
+      });
 
-        res.status(201).json(savedMessage);
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+      if (!chat) {
+          chat = new Chat({
+              users: [senderId, receiverId],
+              messages: []
+          });
+      }
 
+      chat.messages.push({ senderId, message });
+      const savedChat = await chat.save();
+
+      req.io.emit('chatMessage', { senderId, receiverId, message });
+
+      res.status(201).json(savedChat);
+  } catch (err) {
+      res.status(500).json({ message: err.message });
+  }
 };
 
 export const getChatMessages = async (req, res) => {
   try {
       const senderId = req.user.uid;
       const receiverId = req.params.receiverId;
-      const messages = await Chat.find({
-        $or: [
-          { senderId, receiverId },
-          { senderId: receiverId, receiverId: senderId }
-        ]
-      }).sort({ timestamp: -1 });
-      res.json(messages);
+
+      const chat = await Chat.findOne({
+          users: { $all: [senderId, receiverId] }
+      }).sort({ 'messages.timestamp': -1 });
+
+      if (!chat) {
+          return res.status(404).json({ message: 'Chat not found' });
+      }
+
+      res.json(chat.messages);
   } catch (err) {
       res.status(500).json({ message: err.message });
   }

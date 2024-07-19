@@ -1,12 +1,7 @@
 import mongoose from 'mongoose';
 
-const chatSchema = new mongoose.Schema({
+const messageSchema = new mongoose.Schema({
     senderId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
-    },
-    receiverId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
@@ -19,6 +14,17 @@ const chatSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+});
+
+const chatSchema = new mongoose.Schema({
+    users: [
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User',
+            required: true
+        }
+    ],
+    messages: [messageSchema]
 });
 
 export default mongoose.model('Chat', chatSchema);
