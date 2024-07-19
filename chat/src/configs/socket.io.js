@@ -3,7 +3,7 @@ import { Server } from 'socket.io';
 const configureSocket = (server) => {
     const io = new Server(server, {
         cors: {
-            origin: "https://dua-fronted.vercel.app/", 
+            origin: "https://proyecto6to-ee92f.web.app", 
             methods: ["GET", "POST"]
         }
     });
