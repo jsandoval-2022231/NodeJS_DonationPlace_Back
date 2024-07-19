@@ -73,9 +73,8 @@ class Server {
 
     middlewares() {
         this.app.use(cors({
-            origin: 'https://dua-fronted.vercel.app/',
+            origin: 'https://dua-fronted.vercel.app',
             methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-            //methods: ['GET', POST', 'PUT', 'DELETE', 'OPTIONS'],    
             allowedHeaders: ['Content-Type', 'Authorization']
         }));
         
