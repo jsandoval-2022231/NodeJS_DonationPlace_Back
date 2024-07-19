@@ -1,6 +1,7 @@
 'use strict'
 
 import express from 'express';
+import http from 'http';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
@@ -12,6 +13,9 @@ import Item from '../item_service/src/model/item.model.js';
 import ItemRoutes from '../item_service/src/route/item.routes.js';
 import AuthRoutes from '../auth_service/src/route/auth.routes.js';
 import UserRoutes from '../user_service/src/route/user.routes.js';
+import ChatRoutes from '../chat/src/route/chat.routes.js';
+
+import configureSocket from '../chat/src/configs/socket.io.js';
 
 class Server {
     constructor() {
@@ -20,12 +24,22 @@ class Server {
         this.userPath = '/DonationPlace/v1/user';
         this.authPath = '/DonationPlace/v1/auth';
         this.itemPath = '/DonationPlace/v1/item';
+        this.chatPath = '/DonationPlace/v1/chat';
 
         
         this.conectarDB();
         this.createDefaultAdmin();
         this.middlewares();
+        
+
+        this.server = http.createServer(this.app);
+        this.io = configureSocket(this.server);
+        this.app.use((req, res, next) => {
+            req.io = this.io;
+            next();
+        });
         this.routes();
+
     }
 
     async createDefaultAdmin() {
@@ -61,12 +75,14 @@ class Server {
             //methods: ['GET', POST', 'PUT', 'DELETE', 'OPTIONS'],    
             allowedHeaders: ['Content-Type', 'Authorization']
         }));
-        this.app.use(express.json());
+        
+        this.app.use(express.json({limit: '10mb'}));
         this.app.use(helmet());
         this.app.use(morgan('dev'));
     }
 
     routes() {
+        this.app.use(this.chatPath, ChatRoutes);
         this.app.use(this.userPath, UserRoutes);
         this.app.use(this.authPath, AuthRoutes);
         this.app.use(this.itemPath, ItemRoutes);
