@@ -41,10 +41,12 @@ export const postChatMessage = async (req, res) => {
 
 export const getChatMessages = async (req, res) => {
     try {
+        const senderId = req.user;
+        const receiver = req.params.receiverId;
         const messages = await Chat.find({
           $or: [
             { senderId, receiverId },
-            { senderId: receiverId, receiverId: senderId }
+            { senderId: receiver, receiverId: senderId.uid }
           ]
         }).sort({ timestamp: -1 });
         res.json(messages);
