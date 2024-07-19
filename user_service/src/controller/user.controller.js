@@ -16,6 +16,23 @@ const customPostLogic = async (req, res) => {
     return { user };
 }
 
+export const getByToken = async (req, res, next) => {
+    const id = req.user.uid
+    console.log(id)
+    try {
+         const usu = await UserModel.findById(id)
+         if(!usu){
+            return res.status(404).json({ error: 'Usuario no encontrado'})
+         }
+         res.status(200).json({
+            success: true,
+            user: usu
+        });
+    } catch (error) {
+        next(error)
+    }
+}
+
 const userController = createController(UserModel, customPostLogic);
 
 export const post = userController.post;
